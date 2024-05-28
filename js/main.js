@@ -1,50 +1,140 @@
-// //son variables
 
-// let nombre = '';
-
-// //const son variables que no pueden cambiar
-
-// const formulario = '';
-
-// let numero = 1;
+// const app = document.getElementById("app")
 
 
-// //prompt es una interacion con el usuario que nos permite pedir el valor de una variable (TODO SE GUARDA COMO UN STRING)
-
-// let respuesta = prompt('¿como te llamas?')
-
-// //alert
-
-// alert ('debes aceptar lo que salga en la alerta')
-
-// //confirm nos permite elegir (TODOS LOS DATOS SE GUARDAR COMO UN BOOLEANO)
-
-// let confimar = confirm ('confirmar lo que se pida')
-
-// Clase 2 //
-
-//VEAMOS IF
+// app.innerHTML = `<h2> Buenas que tal </h2>
+//                 <p>todo bien </p>
+//                 `
 
 
-// let cajero
+// const lista = document.getElementById("lista")
+// lista.innerHTML = `<li> `
 
-// let numero1 = parseInt
 
-// console.log(typeof numero1)
+// const frutas = ["Annana", "Pera", "Manzana"]
 
-// cajero = 0
+// const cargarDom = () => {
 
-// let ingreso = parseInt(prompt("Escriba el monto a Ingresar"))
+//     const titulo = document.getElementById("titulo")
+//     titulo.innerHTML = "Nuevo titulo"
 
-// cajero = cajero + ingreso
+//     const listado = document.getElementById("listado")
+//     frutas.forEach((fruta) => {
 
-// if (cajero >= 0) {
+//         const elementoDeLista = document.createElement("li")
+//         elementoDeLista.innerText = fruta
+//         listado.append(elementoDeLista)
 
-//     alert ('su saldo es de ' + cajero)
+//     }
+//     )
 
-// } else {
-
-//     alert ('no tiene saldo disponible')
 
 // }
+
+// cargarDom()
+
+
+
+let catalogo = JSON.parse(localStorage.getItem("catalogo")) || []
+
+
+
+const cargarCatalogo = () => {
+
+    const contenedor = document.getElementById("app-aside")
+    
+    catalogo.forEach((producto) => {
+        
+        const nuevoDiv = document.createElement("div")
+        nuevoDiv.classList = "contenedor"
+        nuevoDiv.innerHTML = 
+                            `
+                            <h3> ${producto.tipoDePrenda} </h3> 
+                            <p> Marca : ${producto.marca}</p>
+                            <p> Cantidad : ${producto.cantidad}</p>
+                            <p> Talle : ${producto.talle}</p>
+                            <button type="button" id="eliminiar">Eliminar</button>
+                            <button type="button" id="añadirAlCarro">Añadir al Carrito</button>
+                            `
+
+        contenedor.append(nuevoDiv)                           
+    })
+}
+
+cargarCatalogo()
+
+
+
+const crearCatalogo = document.querySelector("#crear-catalogo")
+
+crearCatalogo.addEventListener("submit", (e) => {
+
+    e.preventDefault()
+
+    const id = crypto.randomUUID()
+    const marca = e.target.children["marca"].value
+    const tipoDePrenda = e.target.children["tipo-de-prenda"].value
+    const cantidad = e.target.children["cantidad"].value
+    const talle = e.target.children["talle"].value
+    const producto = {id,marca,tipoDePrenda,cantidad,talle}
+    catalogo.push(producto)
+    localStorage.setItem("catalogo",JSON.stringify(catalogo))
+    const contenedor = document.getElementById("app-aside")
+
+    const nuevoDiv = document.createElement("div")
+    nuevoDiv.classList = "contenedor"
+    nuevoDiv.innerHTML = 
+                        `
+                            <h3> ${producto.tipoDePrenda} </h3> 
+                            <p> Marca : ${producto.marca}</p>
+                            <p> Cantidad : ${producto.cantidad}</p>
+                            <p> Talle : ${producto.talle}</p>
+                            <button id="eliminar">Eliminar</button>
+                            <button id="añadirAlCarro">Añadir al Carrito</button>
+                        `
+
+    contenedor.append(nuevoDiv)
+    crearCatalogo.reset()
+    
+})
+
+const borrarCatalogo = (id) => {
+    
+    catalogo = catalogo.filter(prenda => prenda.id != id)
+    localStorage.setItem("catalogo",JSON.stringify(catalogo))
+
+}
+
+borrarCatalogo()
+
+
+
+
+
+//Borrador//
+
+
+// const cargarDomDiv = () => {
+
+//     const titulo = document.getElementById("titulo")
+//     titulo.innerHTML = "Nuevo titulo"
+
+//     const tarjetas = document.getElementById("tarjetas")
+
+//     cartas.forEach((carta) => {
+
+//         const elementoDeLista = document.createElement("div")
+//         elementoDeLista.classList = "contenedor"
+//         elementoDeLista.innerHTML = `<h3>DATOS</h3>
+//                                     <ul> 
+//                                         <li> ${carta.nombre} </li>
+//                                         <li> ${carta.id} </li>
+//                                     </ul>
+                                    
+//                                     `
+//         tarjetas.append(elementoDeLista)
+//     })
+// }
+
+// cargarDomDiv()
 

@@ -59,8 +59,6 @@ function validarUsuario(x, y) {
 
     }
 
-    iterador = false
-
 }
 
 
